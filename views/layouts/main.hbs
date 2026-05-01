@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="/css/main.css">
 
     {{!-- helper js --}}
-    <script src="/js/main.js"></script>
+    <script type="module" src="/js/main.js"></script>
 
 </head>
 
@@ -56,7 +56,7 @@
 
             {{!-- close button --}}
             <div class="col-auto ms-2">
-                <button type="button" class="btn-close bg-danger" aria-label="Close" onclick="close_error()"></button>
+                <button type="button" class="btn-close bg-danger" aria-label="Close" id="error_close_button"></button>
             </div>
         </div>
     </div>

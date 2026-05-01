@@ -125,9 +125,39 @@ app.get("/stocks", async (req: Request, res: Response) => {
     res.send(js_object)
 })
 
+// front-end sends a list of StockEntry's when "POST /stocks" is called
+interface StockEntry {
+    name: string;
+    quantity: number;
+}
+
 // POST /stocks
 app.post("/stocks", async (req: Request, res: Response) => {
+    // get all stocks entered
+    const stocks = req.body.stocks
 
+    // check if req.body.stocks is present
+    if (!stocks || !Array.isArray(stocks) || stocks.length === 0) {
+        return res.status(400).json({
+            error: "Missing Data",
+            message: "No stocks were provided in the request or invalid data structure"
+        });
+    }
+
+    try {
+        // try to insert stocks to database
+        await db.insert(stocks_available)
+            .values(stocks)
+            .returning();
+
+        // if we reach here, operation was successful
+        res.status(200).send("Insertion was successful")
+
+    } catch (e) {
+        // if we reach here, operation was not successful
+        console.error("Insertion failed:", e);
+        res.status(500).send("Insertion was NOT successful" + e)
+    }
 })
 
 // start app

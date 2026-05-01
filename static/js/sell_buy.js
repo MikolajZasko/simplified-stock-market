@@ -3,8 +3,6 @@ window.addEventListener('load', function () {
 
 });
 
-
-
 // perform a post call
 function post_call() {
     // read values

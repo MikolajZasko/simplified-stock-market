@@ -1,1 +1,38 @@
-sas
+<script type="module" src="/js/post_stocks.js"></script>
+
+<div class="p-4 border rounded bg-light shadow-sm">
+    <h3 class="mb-4 text-center">Post stocks - overrides the current bank</h3>
+
+    {{!-- Container for dynamic inputs --}}
+    <div id="dynamic-inputs">
+        <div class="row g-2 mb-3 stock-entry">
+            <div class="col-8">
+                <div class="form-floating">
+                    <input type="text" class="form-control stock-name" name="stock_name" placeholder="Name" required>
+                    <label>Stock Name</label>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="form-floating">
+                    <input type="number" class="form-control stock-quantity" name="stock_quantity"
+                        placeholder="quantity" required>
+                    <label>Quantity</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{!-- Add Button --}}
+    <div class="mb-4 text-center">
+        <button type="button" class="btn btn-outline-secondary btn-sm" id="add_button">
+            <i class="bi bi-plus-circle me-1"></i> Add more stocks
+        </button>
+    </div>
+
+    {{!-- Submit Button --}}
+    <div class="d-grid">
+        <button type="button" class="btn btn-primary btn-lg" id="submit_button">
+            <i class="bi bi-cash-stack me-2"></i>Send Request
+        </button>
+    </div>
+</div>
