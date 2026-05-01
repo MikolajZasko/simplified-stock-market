@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+
+    <title>Amplified Stonks Market</title>
+
+    {{!-- favicon --}}
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+    {{!-- bootstrap --}}
+    <link rel="stylesheet" href="/scss/main.css">
+
+    {{!-- bootstrap icons --}}
+    <link rel="stylesheet" href="/bootstrap-icons/bootstrap-icons.css">
+
+    {{!-- helper css --}}
+    <link rel="stylesheet" href="/css/main.css">
+
+    {{!-- helper js --}}
+    <script src="/js/main.js"></script>
+
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+
+    <div id="loading-overlay" class="bg-secondary">
+        <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+    <nav class="navbar justify-content-center border-bottom bs bg-primary sticky-top">
+        {{#each sites}}
+        <button type="button" class="btn btn-secondary m-2 nav_button"><a href="/{{link}}"
+                class="nav-link px-3">{{title}}</a></button>
+        {{/each}}
+    </nav>
+
+    <main class="flex-grow-1 bg-custom_1 py-3">
+        <div class="container ">
+            <div class="row justify-content-center ">
+                <div class="col-12 col-md-8 col-lg-6 shadow-sm p-5 rounded bg-secondary">
+                    {{{body}}}
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-primary text-light py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <h5 class="h4 ">Anna Zaśko</h5>
+                    <p class="text-secondary h5">Thermomix - to takie proste</p>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <h5 class="h4 ">Kontakt</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="tel:+48501178260" class="text-secondary text-decoration-none h5"><i
+                                    class="bi bi-telephone-fill"></i> +48 501 178 260</a></li>
+                        <li><a href="mailto:ania@zintech.pl" class="text-secondary text-decoration-none h5"><i
+                                    class="bi bi-envelope-at-fill"></i>ania@zintech.pl</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <h5 class="h4 ">Social Media</h5>
+                    <div class="social-icons h1">
+                        <a href="https://www.facebook.com/Thermomixtotakieproste" class="text-secondary me-3"><i
+                                class="bi bi-facebook"></i></a>
+                        <a href="https://www.youtube.com/@thermomix-totakieproste4457" class="text-secondary me-3"><i
+                                class="bi bi-youtube"></i></a>
+                        <a href="https://www.instagram.com/thermomix_totakieproste" class="text-secondary me-3"><i
+                                class="bi bi-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="my-4 border-secondary">
+
+            <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center">
+                <p class="mb-0">&copy; 2026 Mikołaj Zaśko All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

@@ -1,4 +1,5 @@
 services:
+  # postgres database
   db:
     image: postgres:18
     restart: always
@@ -17,28 +18,20 @@ services:
       interval: 2s
       timeout: 2s
       retries: 5
-  # initializes the database with drizzle.config.ts
-  db-migrate:
-    build: .
-    command: npx drizzle-kit push --config=drizzle.config.ts --force
-    environment:
-      - ENV CI=true
-      - DATABASE_URL=postgresql://postgress_admin:postgress_admin@db:5432/simplified_stock_market
-    # this makes sure that db is ready to go
-    depends_on:
-      db:
-        condition: service_healthy
-  # Node.js app
+
+  # Node.js app (Production mode)
   app:
-    build: .
+    build:
+      context: .
     ports:
       - "3000:3000"
     environment:
       - DATABASE_URL=postgresql://postgress_admin:postgress_admin@db:5432/simplified_stock_market
+      - NODE_ENV=development
     depends_on:
-      - db
-  # postgres database
-
+      # a health check for app - runs when the db is ready
+      db:
+        condition: service_healthy
 
 volumes:
   pgdata:

@@ -1,0 +1,27 @@
+services:
+  # Node.js app (Development mode)
+  app:
+    build:
+      target: builder
+    environment:
+      - NODE_ENV=development
+    volumes:
+      # this should allow for local development using tsx defined 
+      # in package.json in scripts in dev 
+      - .:/app
+      - /app/node_modules
+    command: npm run dev
+
+  # initializes the database with drizzle.config.ts - should be done only in development
+  db-migrate:
+    build:
+      context: .
+      target: builder
+    command: npx drizzle-kit push --config=src/db/drizzle_configs/drizzle.config.ts --force
+    environment:
+      - ENV CI=true
+      - DATABASE_URL=postgresql://postgress_admin:postgress_admin@db:5432/simplified_stock_market
+    # this makes sure that db is ready to go
+    depends_on:
+      db:
+        condition: service_healthy
