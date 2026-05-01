@@ -6,21 +6,25 @@
     "scripts": {
         "build": "tsc",
         "start": "node dist/index.js",
-        "dev": "nodemon -L --watch src -e ts,json --exec \"tsx ./src/index.ts\""
+        "dev": "nodemon -L --watch src --watch package-lock.json -e ts,json --exec \"tsx ./src/index.ts\""
     },
     "dependencies": {
         "bootstrap": "^5.3.8",
+        "bootstrap-icons": "^1.13.1",
         "drizzle-kit": "^0.31.10",
         "drizzle-orm": "^0.45.2",
         "express": "^5.2.1",
         "express-handlebars": "^9.0.1",
-        "pg": "^8.20.0"
+        "pg": "^8.20.0",
+        "serve-favicon": "^2.5.1"
     },
     "devDependencies": {
         "@types/express": "^5.0.6",
         "@types/express-handlebars": "^6.0.2",
+        "@types/handlebars": "^4.0.40",
         "@types/node": "^25.6.0",
         "@types/pg": "^8.20.0",
+        "@types/serve-favicon": "^2.5.7",
         "nodemon": "^3.1.14",
         "ts-node": "^10.9.2",
         "tsx": "^4.21.0",

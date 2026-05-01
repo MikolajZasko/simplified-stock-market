@@ -1,0 +1,28 @@
+<script src="/js/sell_buy.js"></script>
+
+<div class="p-4 border rounded bg-light shadow-sm">
+    <h3 class="mb-4 text-center">Buy / Sell</h3>
+
+    {{!-- type input --}}
+    <div class="form-floating mb-3">
+        <select class="form-select" id="type" name="type" aria-label="Transaction type" required>
+            <option value="" selected disabled>Open this select menu</option>
+            <option value="buy">buy</option>
+            <option value="sell">sell</option>
+        </select>
+        <label for="type">Choose transaction type</label>
+    </div>
+
+    {{!-- Stock Name Input --}}
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="stock_name" name="stock_name" placeholder="stock_name" required>
+        <label for="stock_name">Stock Name</label>
+    </div>
+
+    {{!-- Submit Button --}}
+    <div class="d-grid">
+        <button type="button" class="btn btn-primary btn-lg" onclick="post_call()">
+            <i class="bi bi-cash-stack me-2"></i>send a request
+        </button>
+    </div>
+</div>

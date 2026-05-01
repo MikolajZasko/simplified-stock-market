@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
 
-    <title>Amplified Stonks Market</title>
+    <title>Amplified Stonks Market | {{title}}</title>
 
     {{!-- favicon --}}
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
@@ -34,9 +34,36 @@
         </div>
     </div>
 
+    {{!-- error_overlay --}}
+    <div id="error_overlay" class="d-none"></div>
+
+    {{!-- error_box --}}
+    <div id="error_box" class="alert alert-danger fade show absolute-center p-4 d-none shadow-lg"
+        style="min-width: 350px;" role="alert">
+        <div class="row g-0 align-items-start">
+
+            {{!-- icon --}}
+            <div class="col-auto me-3 mt-1">
+                <i class="bi bi-exclamation-octagon-fill text-danger fs-2"></i>
+            </div>
+
+            {{!-- message content --}}
+            <div class="col">
+                <h5 class="alert-heading text-danger fw-bold mb-1">Operation Failed</h5>
+                <p id="error_message" class="text-dark mb-0 small">
+                </p>
+            </div>
+
+            {{!-- close button --}}
+            <div class="col-auto ms-2">
+                <button type="button" class="btn-close bg-danger" aria-label="Close" onclick="close_error()"></button>
+            </div>
+        </div>
+    </div>
+
     <nav class="navbar justify-content-center border-bottom bs bg-primary sticky-top">
-        {{#each sites}}
-        <button type="button" class="btn btn-secondary m-2 nav_button"><a href="/{{link}}"
+        {{#each nav_buttons}}
+        <button type="button" class="btn btn-secondary m-2 nav_button"><a href="{{link}}"
                 class="nav-link px-3">{{title}}</a></button>
         {{/each}}
     </nav>
@@ -53,38 +80,6 @@
 
     <footer class="bg-primary text-light py-5">
         <div class="container">
-            <div class="row">
-                <div class="col-md-4 mb-3">
-                    <h5 class="h4 ">Anna Zaśko</h5>
-                    <p class="text-secondary h5">Thermomix - to takie proste</p>
-                </div>
-
-                <div class="col-md-4 mb-3">
-                    <h5 class="h4 ">Kontakt</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="tel:+48501178260" class="text-secondary text-decoration-none h5"><i
-                                    class="bi bi-telephone-fill"></i> +48 501 178 260</a></li>
-                        <li><a href="mailto:ania@zintech.pl" class="text-secondary text-decoration-none h5"><i
-                                    class="bi bi-envelope-at-fill"></i>ania@zintech.pl</a>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="col-md-4 mb-3">
-                    <h5 class="h4 ">Social Media</h5>
-                    <div class="social-icons h1">
-                        <a href="https://www.facebook.com/Thermomixtotakieproste" class="text-secondary me-3"><i
-                                class="bi bi-facebook"></i></a>
-                        <a href="https://www.youtube.com/@thermomix-totakieproste4457" class="text-secondary me-3"><i
-                                class="bi bi-youtube"></i></a>
-                        <a href="https://www.instagram.com/thermomix_totakieproste" class="text-secondary me-3"><i
-                                class="bi bi-instagram"></i></a>
-                    </div>
-                </div>
-            </div>
-
-            <hr class="my-4 border-secondary">
-
             <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center">
                 <p class="mb-0">&copy; 2026 Mikołaj Zaśko All rights reserved.</p>
             </div>
