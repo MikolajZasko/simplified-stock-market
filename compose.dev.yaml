@@ -12,12 +12,12 @@ services:
       - /app/node_modules
     command: npm run dev
 
-  # initializes the database with drizzle.config.ts - should be done only in development
+  # destroys and initializes the database with reset-db.sh and drizzle.config.ts - should be done only in development
   db-migrate:
     build:
       context: .
       target: builder
-    command: npx drizzle-kit push --config=src/db/drizzle_configs/drizzle.config.ts --force
+    command: /app/scripts/reset-db.sh
     environment:
       - ENV CI=true
       - DATABASE_URL=postgresql://postgress_admin:postgress_admin@db:5432/simplified_stock_market

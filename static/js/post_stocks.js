@@ -1,4 +1,4 @@
-import { error } from "./error.js"
+import { error } from "./info_boxes/error.js"
 
 // adds button functionality after DOMloaded
 document.addEventListener("DOMContentLoaded", () => {

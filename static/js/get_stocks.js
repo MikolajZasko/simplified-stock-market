@@ -1,4 +1,4 @@
-import { error } from "./error.js"
+import { error } from "./info_boxes/error.js"
 
 // try to GET the state of "Bank"
 try {
@@ -11,8 +11,6 @@ try {
     }
 
     const stocks = await response.json();
-
-    console.log(stocks)
 
     // if all went fine, add stocks to html
     await injectStocks(stocks.stocks)

@@ -61,6 +61,34 @@
         </div>
     </div>
 
+    {{!-- success_overlay --}}
+    <div id="success_overlay" class="d-none"></div>
+
+    {{!-- success_box --}}
+    <div id="success_box" class="alert alert-success fade show absolute-center p-4 d-none shadow-lg"
+        style="min-width: 350px;" role="alert">
+        <div class="row g-0 align-items-start">
+
+            {{!-- icon --}}
+            <div class="col-auto me-3 mt-1">
+                <i class="bi bi-check-circle-fill text-success fs-2"></i>
+            </div>
+
+            {{!-- message content --}}
+            <div class="col">
+                <h5 class="alert-heading text-success fw-bold mb-1">Success!</h5>
+                <p id="success_message" class="text-dark mb-0 small">
+                </p>
+            </div>
+
+            {{!-- close button --}}
+            <div class="col-auto ms-2">
+                <button type="button" class="btn-close bg-success" aria-label="Close"
+                    id="success_close_button"></button>
+            </div>
+        </div>
+    </div>
+
     <nav class="navbar justify-content-center border-bottom bs bg-primary sticky-top">
         {{#each nav_buttons}}
         <button type="button" class="btn btn-secondary m-2 nav_button"><a href="{{link}}"

@@ -85,6 +85,8 @@ app.get("/post_stocks", (req: Request, res: Response) => {
 })
 
 // pure backend routes - requirements from file
+// 
+// "simulates sell or buy of a single stock"
 app.post('/wallets/:wallet_id/stocks/:stock_name', async (req: Request, res: Response) => {
 
     // take action from body
@@ -92,6 +94,8 @@ app.post('/wallets/:wallet_id/stocks/:stock_name', async (req: Request, res: Res
 
     // take wallet id from url
     const { wallet_id, stock_name } = req.params;
+
+    console.log(wallet_id)
 
     // check if user entered a wallet id (it needs to be a digit)
     if (typeof wallet_id !== 'string' || !/^\d+$/.test(wallet_id)) {
@@ -112,6 +116,19 @@ app.post('/wallets/:wallet_id/stocks/:stock_name', async (req: Request, res: Res
             wallet_id: number_wallet_id
         });
     }
+
+    // TO DO:
+    // check the type - buy/sell
+    // add data to wallet_ownership
+    // if stock was bought:
+    //  -= 1 from bank
+    //  add data to  wallet_ownership
+    // if stock was sold:
+    //  += 1 to bank ???
+    //  remove data from wallet_ownership
+    //
+    // fix the front-end - it should show success when server responds???
+    // fix the front-end - success box appears but the black background does not 
 
     return res.status(200).send("created a wallet");
 });

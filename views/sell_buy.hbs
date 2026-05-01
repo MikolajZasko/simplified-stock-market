@@ -19,9 +19,15 @@
         <label for="stock_name">Stock Name</label>
     </div>
 
+    {{!-- Wallet ID input --}}
+    <div class="form-floating mb-3">
+        <input type="number" class="form-control" id="wallet_id" name="wallet_id" placeholder="wallet_id" required>
+        <label for="wallet_id">Wallet ID</label>
+    </div>
+
     {{!-- Submit Button --}}
     <div class="d-grid">
-        <button type="button" class="btn btn-primary btn-lg" onclick="post_call()">
+        <button type="button" class="btn btn-primary btn-lg" id="send_button">
             <i class="bi bi-cash-stack me-2"></i>send a request
         </button>
     </div>

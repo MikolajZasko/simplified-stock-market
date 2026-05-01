@@ -10,6 +10,9 @@ RUN npm install
 COPY . .
 RUN npm run build
 
+# install postgresql-client - required for reset-db.sql
+RUN apk add --no-cache postgresql-client
+
 # stage 2 - run the app
 FROM node:22-alpine AS runner
 WORKDIR /app
