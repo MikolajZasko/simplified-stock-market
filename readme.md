@@ -15,8 +15,9 @@ cd simplified-stock-market
 # start the app
 docker-compose up --build -d
 
-# if you want to look into the database using a local machine use the drizzle.config_local.ts like so:
-npx drizzle-kit studio --config=src/db/drizzle.config_local.ts
+# if you want to look into the database using a local machine 
+# use the drizzle.config_local.ts like so:
+npx drizzle-kit studio --config=src/db/drizzle_configs/drizzle.config_local.ts
 ```
 
 The server will be running at http://localhost:3000 (this requires change)
@@ -26,13 +27,15 @@ If started, drizzle will be running at https://local.drizzle.studio/ (kinda like
 ## Tech Stack
  - Node.js
  - TypeScript
+ - drizzle
+ - postgresql
  - Docker
  - REST API
 
 ## Project Structure
 ```
 ├── src/
-│   └── index.ts        # Entry point
+│   └── index.ts        # App logic / Entry point
 ├── Dockerfile          # Docker config
 ├── compose.yaml        # Starts the app
 └── tsconfig.json       # TypeScript configuration

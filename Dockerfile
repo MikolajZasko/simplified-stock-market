@@ -22,9 +22,9 @@ COPY --from=builder /app/dist ./dist
 
 # copy database info for drizzle
 # drizzle.config.ts
-COPY --from=builder /app/src/db/drizzle.config.ts ./drizzle.config.ts
+COPY --from=builder /app/src/db/drizzle_configs/drizzle.config.ts ./drizzle.config.ts
 # schema.ts
-COPY --from=builder /app/src/db/schema.ts ./src/db/schema.ts
+COPY --from=builder /app/src/db/schemas/schema.ts ./src/db/schema.ts
 
 EXPOSE 3000
 CMD ["node", "dist/index.js"]
