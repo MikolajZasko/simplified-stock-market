@@ -68,6 +68,14 @@ app.get("/sell_buy", (req: Request, res: Response) => {
     })
 })
 
+// GET /stocks - front-end
+app.get("/get_stocks", (req: Request, res: Response) => {
+    res.render("get_stocks.hbs", {
+        nav_buttons: nav_buttons,
+        title: getPageTitle(req.path)
+    })
+})
+
 // post_stocks form - front-end
 app.get("/post_stocks", (req: Request, res: Response) => {
     res.render("post_stocks.hbs", {

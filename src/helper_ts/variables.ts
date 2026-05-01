@@ -11,7 +11,7 @@ export const nav_buttons = [
     },
     {
         title: "GET stocks",
-        link: "/stocks"
+        link: "/get_stocks"
     },
     {
         title: "POST stocks",

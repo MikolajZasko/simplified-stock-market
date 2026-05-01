@@ -68,7 +68,7 @@ async function post_call() {
         }
 
         // if all went fine, refirect to GET stocks front-end
-        window.location.href = "/stocks";
+        window.location.href = "/get_stocks";
 
     } catch (err) {
         error(err.message);
