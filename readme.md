@@ -3,6 +3,9 @@ A simple stock market simulation using Node.js and TypeScript fully containerize
 
 ## Quick Start
 ```bash
+# firstly, make sure you have docker desktop downloaded and running!
+# https://www.docker.com/products/docker-desktop/
+#
 # clone the git repo
 git clone https://github.com/MikolajZasko/simplified-stock-market.git
 
@@ -10,10 +13,15 @@ git clone https://github.com/MikolajZasko/simplified-stock-market.git
 cd simplified-stock-market
 
 # start the app
-docker compose up --build
+docker-compose up --build -d
+
+# if you want to look into the database using a local machine use the drizzle.config_local.ts like so:
+npx drizzle-kit studio --config=src/db/drizzle.config_local.ts
 ```
 
 The server will be running at http://localhost:3000 (this requires change)
+The postgres database will be running at http://localhost:5432
+If started, drizzle will be running at https://local.drizzle.studio/ (kinda like a phpmyadmin for sql)
 
 ## Tech Stack
  - Node.js

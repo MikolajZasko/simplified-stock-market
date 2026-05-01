@@ -1,5 +1,44 @@
 services:
+  db:
+    image: postgres:18
+    restart: always
+    environment:
+      POSTGRES_USER: postgress_admin
+      POSTGRES_PASSWORD: postgress_admin
+      POSTGRES_DB: simplified_stock_market
+      PGDATA: /var/lib/postgresql/data/pg18
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql
+    # needed for db-migrate
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgress_admin -d simplified_stock_market" ]
+      interval: 2s
+      timeout: 2s
+      retries: 5
+  # initializes the database with drizzle.config.ts
+  db-migrate:
+    build: .
+    command: npx drizzle-kit push --config=drizzle.config.ts --force
+    environment:
+      - ENV CI=true
+      - DATABASE_URL=postgresql://postgress_admin:postgress_admin@db:5432/simplified_stock_market
+    # this makes sure that db is ready to go
+    depends_on:
+      db:
+        condition: service_healthy
+  # Node.js app
   app:
     build: .
     ports:
       - "3000:3000"
+    environment:
+      - DATABASE_URL=postgresql://postgress_admin:postgress_admin@db:5432/simplified_stock_market
+    depends_on:
+      - db
+  # postgres database
+
+
+volumes:
+  pgdata:
