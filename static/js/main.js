@@ -23,6 +23,11 @@ window.addEventListener('load', function () {
     if (needsData) {
         // Wait for the custom signal from get_stocks.js
         window.addEventListener('pageDataLoaded', hideLoading);
+
+        // this is an emergency close of the spinner after 2 secs
+        setTimeout(2000)
+        hideLoading()
+
     } else {
         // No special data needed, hide now
         hideLoading();
