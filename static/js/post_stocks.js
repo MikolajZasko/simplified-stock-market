@@ -71,6 +71,6 @@ async function post_call() {
         window.location.href = "/get_stocks";
 
     } catch (err) {
-        error(err.message);
+        error(err.message, 404);
     }
 }

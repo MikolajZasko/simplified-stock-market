@@ -1,14 +1,31 @@
 // imported in various view related js scripts
 //
 // show the success_box
-export function success(message) {
+export function success(message, status_code = 0) {
     // get needed elements
     const successBox = document.getElementById('success_box');
     const successOverlay = document.getElementById('success_overlay');
     const messageElement = document.getElementById('success_message');
+    const successImg = document.getElementById('success_img');
 
     // insert message
     messageElement.textContent = message;
+
+    // check if we add a cat as http error code
+    if (status_code != 0) {
+        successImg.src = "https://http.cat/" + status_code
+
+        // check if d-none if it is d-none remove d-none from img
+        if (successImg.classList.contains('d-none')) {
+            successImg.classList.remove("d-none")
+        }
+    }
+    else {
+        // check if d-none if not add d-none to img
+        if (!successImg.classList.contains('d-none')) {
+            successImg.classList.add("d-none")
+        }
+    }
 
     // remove a class so elements appear
     successBox.classList.remove('d-none');
@@ -24,4 +41,16 @@ export function close_success() {
     // add a class so elements disappear
     successBox.classList.add('d-none');
     successOverlay.classList.add('d-none');
+}
+
+// a function used to handle success box popping up, based on response
+export async function call_success(response) {
+    // wait for a json object
+    const response_json = await response.json();
+
+    // call the success box
+    success(response.status + " - " + response_json.message, response.status)
+
+    // log the success
+    console.log("Success: ", response_json.message, " Status: ", response.status)
 }

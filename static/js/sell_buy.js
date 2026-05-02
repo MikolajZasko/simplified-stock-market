@@ -1,4 +1,4 @@
-import { success } from "./info_boxes/success.js"
+import { call_success } from "./info_boxes/success.js"
 import { error, call_error } from "./info_boxes/error.js"
 
 // wait for the whole page to load 
@@ -20,9 +20,7 @@ async function sell_buy_stock() {
     // check if valid type
     if (type_value == "buy") {
         // check if given stock is available in bank
-        console.log(stock_name)
         const result = await bank_check(stock_name)
-        console.log(result)
 
         if (result == 2) {
             error("The stock provided is not present in Bank")
@@ -60,8 +58,6 @@ async function bank_check(stock_name) {
 
         const stocks = await response.json();
 
-        console.log(stocks.stocks)
-
         // if all went fine, check if our stock in response
         const exists = stocks.stocks.some(s => s.name === stock_name);
 
@@ -83,7 +79,6 @@ async function bank_check(stock_name) {
 async function buy_stock(stock_name, wallet_id) {
     // create the right url
     const url = "/wallets/" + wallet_id + "/stocks/" + stock_name
-    console.log(url)
 
     // try to POST the purchase
     try {
@@ -99,7 +94,8 @@ async function buy_stock(stock_name, wallet_id) {
         }
 
         // if all went fine, show success_box
-        success("The wallet with id " + wallet_id + " successfully purchased stock " + stock_name)
+        // "The wallet with id " + wallet_id + " successfully purchased stock " + stock_name
+        call_success(response)
 
     } catch (err) {
         error(err.message);

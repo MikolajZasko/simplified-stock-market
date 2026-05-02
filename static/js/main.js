@@ -3,7 +3,7 @@ import { success, close_success } from "./info_boxes/success.js";
 
 // hides loading screen when applicable
 function hideLoading() {
-    const overlay = document.getElementById('loading-overlay');
+    const overlay = document.getElementById('loading_overlay');
 
     // add the 'hidden' class to trigger CSS transition
     overlay.classList.add('hidden');

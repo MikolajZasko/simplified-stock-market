@@ -95,8 +95,6 @@ app.post('/wallets/:wallet_id/stocks/:stock_name', async (req: Request, res: Res
     // take wallet id from url
     const { wallet_id, stock_name } = req.params;
 
-    console.log(wallet_id)
-
     // check if user entered a wallet id (it needs to be a digit)
     if (typeof wallet_id !== 'string' || !/^\d+$/.test(wallet_id)) {
         return res.status(400).json({
@@ -140,7 +138,7 @@ app.post('/wallets/:wallet_id/stocks/:stock_name', async (req: Request, res: Res
     // stocks should override previous bank status
 
     // return res.status(200).send("created a wallet");
-    return res.status(404).json({
+    return res.status(200).json({
         message: "test"
     });
 });

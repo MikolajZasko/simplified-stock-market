@@ -22,7 +22,7 @@ async function fetch_stocks() {
         window.dispatchEvent(event);
     }
     catch (err) {
-        error(err.message);
+        error(err.message, 404);
     }
 }
 

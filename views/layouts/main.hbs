@@ -28,14 +28,14 @@
 
 <body class="d-flex flex-column min-vh-100">
 
-    <div id="loading-overlay" class="bg-secondary">
+    <div id="loading_overlay" class="bg-secondary">
         <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
             <span class="visually-hidden">Loading...</span>
         </div>
     </div>
 
     {{!-- error_overlay --}}
-    <div id="error_overlay" class="d-none"></div>
+    <div id="error_overlay" class="d-none message_overlay"></div>
 
     {{!-- error_box --}}
     <div id="error_box" class="alert alert-danger fade show absolute-center p-4 d-none shadow-lg"
@@ -58,11 +58,17 @@
             <div class="col-auto ms-2">
                 <button type="button" class="btn-close bg-danger" aria-label="Close" id="error_close_button"></button>
             </div>
+
+            {{!-- image --}}
+            <div class="row justify-content-center">
+                <img src="https://http.cat/404" alt="a cat image representing the code status"
+                    class="img-fluid rounded shadow-lg d-none" style="width: 50%; height: auto;" id="error_img">
+            </div>
         </div>
     </div>
 
     {{!-- success_overlay --}}
-    <div id="success_overlay" class="d-none"></div>
+    <div id="success_overlay" class="d-none message_overlay"></div>
 
     {{!-- success_box --}}
     <div id="success_box" class="alert alert-success fade show absolute-center p-4 d-none shadow-lg"
@@ -85,6 +91,12 @@
             <div class="col-auto ms-2">
                 <button type="button" class="btn-close bg-success" aria-label="Close"
                     id="success_close_button"></button>
+            </div>
+
+            {{!-- image --}}
+            <div class="row justify-content-center">
+                <img src="https://http.cat/200" alt="a cat image representing the code status"
+                    class="img-fluid rounded shadow-lg d-none" style="width: 50%; height: auto;" id="success_img">
             </div>
         </div>
     </div>
