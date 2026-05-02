@@ -253,7 +253,7 @@ app.post('/wallets/:wallet_id/stocks/:stock_name', async (req: Request, res: Res
             try {
                 // try to subtract 1 from wallet_ownership
                 await db.update(wallet_ownership)
-                    .set({ stock_amount: sql`${wallet_ownership.stock_amount} + 1` })
+                    .set({ stock_amount: sql`${wallet_ownership.stock_amount} - 1` })
                     .where(and(
                         eq(wallet_ownership.wallet_id, number_wallet_id),
                         eq(wallet_ownership.stock_id, Number(stock_selected.stock_id))
@@ -292,7 +292,7 @@ app.post('/wallets/:wallet_id/stocks/:stock_name', async (req: Request, res: Res
     // although if you do as descibed above there can be a wallet with a stock that does not exist in db
 
     // TO DO:
-    // stocks should override previous bank status
+    // i can sell infinetly a certain stock???????
 
     return res.status(400).json({
         message: "Unrecognised operation type: " + action
