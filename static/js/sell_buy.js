@@ -1,5 +1,5 @@
 import { success } from "./info_boxes/success.js"
-import { error } from "./info_boxes/error.js"
+import { error, call_error } from "./info_boxes/error.js"
 
 // wait for the whole page to load 
 window.addEventListener('load', function () {
@@ -54,7 +54,8 @@ async function bank_check(stock_name) {
         });
 
         if (!response.ok) {
-            error("Server error")
+            call_error(response)
+            return
         }
 
         const stocks = await response.json();
@@ -93,7 +94,7 @@ async function buy_stock(stock_name, wallet_id) {
         });
 
         if (!response.ok) {
-            error("Server error")
+            call_error(response)
             return
         }
 

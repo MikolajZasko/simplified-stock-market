@@ -64,7 +64,7 @@ async function post_call() {
         });
 
         if (!response.ok) {
-            error("Server error")
+            call_error(response)
         }
 
         // if all went fine, refirect to GET stocks front-end

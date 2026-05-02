@@ -99,7 +99,9 @@ app.post('/wallets/:wallet_id/stocks/:stock_name', async (req: Request, res: Res
 
     // check if user entered a wallet id (it needs to be a digit)
     if (typeof wallet_id !== 'string' || !/^\d+$/.test(wallet_id)) {
-        return res.status(400).send("Invalid Wallet ID");
+        return res.status(400).json({
+            message: "Invalid Wallet ID"
+        });
     }
 
     // change the wallet id to number
@@ -109,6 +111,11 @@ app.post('/wallets/:wallet_id/stocks/:stock_name', async (req: Request, res: Res
     const walletsId = await db.select({
         id: created_wallets.wallet_id
     }).from(created_wallets);
+
+    // get just the id's in an array
+    walletsId.forEach(w => {
+        return w.id
+    });
 
     if (!(wallet_id in walletsId)) {
         // wallet does not exist - create it 
@@ -129,8 +136,13 @@ app.post('/wallets/:wallet_id/stocks/:stock_name', async (req: Request, res: Res
     //
     // fix the front-end - it should show success when server responds???
     // fix the front-end - success box appears but the black background does not 
+    // 
+    // stocks should override previous bank status
 
-    return res.status(200).send("created a wallet");
+    // return res.status(200).send("created a wallet");
+    return res.status(404).json({
+        message: "test"
+    });
 });
 
 // GET /stocks - return all stocks available in the "Bank"
@@ -176,12 +188,17 @@ app.post("/stocks", async (req: Request, res: Response) => {
             .returning();
 
         // if we reach here, operation was successful
-        res.status(200).send("Insertion was successful")
+        return res.status(200).json({
+            message: "Insertion was successful"
+        })
 
     } catch (e) {
         // if we reach here, operation was not successful
         console.error("Insertion failed:", e);
-        res.status(500).send("Insertion was NOT successful" + e)
+        return res.status(500).json({
+            message: "Insertion was NOT successful",
+            error: e
+        })
     }
 })
 

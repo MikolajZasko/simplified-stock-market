@@ -25,3 +25,15 @@ export function close_error() {
     errorBox.classList.add('d-none');
     errorOverlay.classList.add('d-none');
 }
+
+// a function used to handle error box popping up, based on response
+export async function call_error(response) {
+    // wait for a json object
+    const response_json = await response.json();
+
+    // call the error box
+    error(response.status + " - " + response_json.message)
+
+    // log the error
+    console.log("Error: ", response_json.message, " Status: ", response.status)
+}
