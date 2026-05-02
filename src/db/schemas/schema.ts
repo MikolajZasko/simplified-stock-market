@@ -14,7 +14,8 @@ export const stocks_available = pgTable('stocks_available', {
 export const wallet_ownership = pgTable('wallet_ownership', {
     ownership_id: serial('ownership_id').primaryKey(),
     wallet_id: integer('wallet_id').references(() => created_wallets.wallet_id),
-    stock_id: integer('stock_id').references(() => stocks_available.stock_id),
+    // because of { onDelete: 'cascade' } - if we wipe wallet_ownership table all dependancies are wiped too
+    stock_id: integer('stock_id').references(() => stocks_available.stock_id, { onDelete: 'cascade' }),
     stock_amount: integer('stock_amount').notNull().default(0)
 });
 

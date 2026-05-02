@@ -1,4 +1,5 @@
-import { error } from "./info_boxes/error.js"
+import { error, call_error } from "./info_boxes/error.js"
+import { success, call_success } from "./info_boxes/success.js"
 
 // adds button functionality after DOMloaded
 document.addEventListener("DOMContentLoaded", () => {
@@ -67,8 +68,8 @@ async function post_call() {
             call_error(response)
         }
 
-        // if all went fine, refirect to GET stocks front-end
-        window.location.href = "/get_stocks";
+        // if all went fine, display success box
+        call_success(response)
 
     } catch (err) {
         error(err.message, 404);

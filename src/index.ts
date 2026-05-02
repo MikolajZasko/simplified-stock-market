@@ -284,7 +284,7 @@ app.post('/wallets/:wallet_id/stocks/:stock_name', async (req: Request, res: Res
         });
     }
 
-    // if this fails there are 2 possibilities:
+    // if this whole "simulates sell or buy of a single stock" fails there are 2 possibilities:
     // a) db is down
     // b) someone actually bought a stock, inserted new values to bank (overriding them)
     // and now tries to add them back to bank - so we SHOULD try to insert a new record to stocks_available
@@ -292,8 +292,6 @@ app.post('/wallets/:wallet_id/stocks/:stock_name', async (req: Request, res: Res
     // although if you do as descibed above there can be a wallet with a stock that does not exist in db
 
     // TO DO:
-    // fix the front-end - success box appears but the black background does not 
-    // 
     // stocks should override previous bank status
 
     return res.status(400).json({
@@ -332,9 +330,14 @@ app.post("/stocks", async (req: Request, res: Response) => {
     }
 
     try {
-        // try to insert stocks to database
-        await db.insert(stocks_available)
-            .values(stocks)
+        // try to insert stocks to database        
+        await db.transaction(async (tx) => {
+            // Clear the table
+            await tx.delete(stocks_available);
+
+            // insert new values to table
+            await tx.insert(stocks_available).values(stocks);
+        });
 
         // if we reach here, operation was successful
         return res.status(200).json({

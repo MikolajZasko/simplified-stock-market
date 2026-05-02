@@ -1,4 +1,4 @@
-import { call_success } from "./info_boxes/success.js"
+import { success, call_success } from "./info_boxes/success.js"
 import { error, call_error } from "./info_boxes/error.js"
 
 // wait for the whole page to load 

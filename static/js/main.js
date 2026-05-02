@@ -1,5 +1,5 @@
-import { error, close_error } from "./info_boxes/error.js"
-import { success, close_success } from "./info_boxes/success.js";
+import { error, close_error, call_error } from "./info_boxes/error.js"
+import { success, close_success, call_success } from "./info_boxes/success.js";
 
 // hides loading screen when applicable
 function hideLoading() {
@@ -24,7 +24,8 @@ window.addEventListener('load', function () {
         // Wait for the custom signal from get_stocks.js
         window.addEventListener('pageDataLoaded', hideLoading);
 
-        // this is an emergency close of the spinner after 2 secs
+        // this is an emergency close of the spinner after 2 secs - if for any reason 
+        // the addEventListener and event dispach fail 
         setTimeout(2000)
         hideLoading()
 

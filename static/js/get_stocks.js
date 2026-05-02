@@ -1,4 +1,4 @@
-import { error } from "./info_boxes/error.js"
+import { error, call_error } from "./info_boxes/error.js"
 
 // a function that is called right away (just when get_stocks.js is send to client)
 async function fetch_stocks() {
