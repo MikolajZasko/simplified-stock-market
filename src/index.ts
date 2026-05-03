@@ -8,12 +8,12 @@ import { engine } from 'express-handlebars';
 
 // db imports
 import { db } from './db/db_connection.js';
-import { stocks_available, wallet_ownership, created_wallets } from './db/schemas/schema.js';
-import { eq, and, sql, gt } from 'drizzle-orm';
+import { stocks_available, wallet_ownership, created_wallets, type NewLog, audit_log } from './db/schemas/schema.js';
+import { eq, and, sql, gt, asc } from 'drizzle-orm';
 
 // helper inports
 import { nav_buttons } from "./helper_ts/variables.js"
-import { getPageTitle } from "./helper_ts/functions.js"
+import { getPageTitle, db_log_insert } from "./helper_ts/functions.js"
 
 // variables
 const app = express();
@@ -86,6 +86,14 @@ app.get("/post_stocks", (req: Request, res: Response) => {
 // get_wallet - front-end
 app.get("/get_wallet", (req: Request, res: Response) => {
     res.render("get_wallet.hbs", {
+        nav_buttons: nav_buttons,
+        title: getPageTitle(req.path)
+    })
+})
+
+// audit_log - front-end
+app.get("/audit_log", (req: Request, res: Response) => {
+    res.render("audit_log.hbs", {
         nav_buttons: nav_buttons,
         title: getPageTitle(req.path)
     })
@@ -231,6 +239,16 @@ app.post('/wallets/:wallet_id/stocks/:stock_name', async (req: Request, res: Res
         }
 
         // if we got here, we successfully bought a stock
+        // 
+        // prep entry log variable
+        const log_entry: NewLog = {
+            transaction_type: action,
+            wallet_id: number_wallet_id,
+            stock_name: stock_name
+        }
+
+        // add entry to log
+        db_log_insert(db,log_entry)
         return res.status(200).json({
             message: "Wallet " + wallet_id + " successfully bought a stock '" + stock_name + "'"
         });
@@ -260,7 +278,7 @@ app.post('/wallets/:wallet_id/stocks/:stock_name', async (req: Request, res: Res
             // we know that we can sell the stock because of - gt(wallet_ownership.stock_amount, 0)
             // 
             // extract object
-            const wallet_ownership_record = wallet_ownership_result[0]
+            // const wallet_ownership_record = wallet_ownership_result[0]
 
             try {
                 // try to subtract 1 from wallet_ownership
@@ -293,6 +311,18 @@ app.post('/wallets/:wallet_id/stocks/:stock_name', async (req: Request, res: Res
         }
 
         // if we got here, we successfully sold a stock
+        // 
+        // prep entry log variable
+        const log_entry: NewLog = {
+            transaction_type: action,
+            wallet_id: number_wallet_id,
+            stock_name: stock_name
+        }
+
+        // add entry to log
+        db_log_insert(db,log_entry)
+
+        // return message
         return res.status(200).json({
             message: "Wallet " + wallet_id + " successfully sold a stock '" + stock_name + "'"
         });
@@ -475,6 +505,35 @@ app.get('/wallets/:wallet_id/stocks/:stock_name', async (req: Request, res: Resp
             error: e
         })
     }
+})
+
+// GET /log
+app.get('/log', async (req: Request, res: Response) => {
+    try {
+        // try to get sorted data from audit_log
+        const audit_log_result = await db.select({
+            type: audit_log.transaction_type,
+            wallet_id: audit_log.wallet_id,
+            stock_name: audit_log.stock_name
+        })
+            .from(audit_log)
+            .orderBy(asc(audit_log.log_id))
+
+        console.log(audit_log_result)
+
+        // send response
+        return res.status(200).json({
+            log: audit_log_result
+        })
+    }
+    catch (e) {
+        return res.status(500).json({
+            message: "An error occured while fetching audit_log",
+            error: e
+        })
+    }
+
+    
 })
 
 // start app

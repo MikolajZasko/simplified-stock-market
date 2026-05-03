@@ -1,0 +1,23 @@
+<script type="module" src="/js/audit_log.js" async></script>
+
+<h3 class="mb-4 text-center">Get Audit log - shown in ascending order</h3>
+
+<div class="table-responsive">
+    <table class="table table-hover table-striped border shadow-sm">
+        <thead class="table-primary">
+            <tr>
+                <th scope="col" class="text-center">transaction_type</th>
+                <th scope="col" class="text-center">wallet_id</th>
+                <th scope="col" class="text-center">stock_name</th>
+            </tr>
+        </thead>
+        <tbody id="log_table_body">
+            <tr>
+                <td colspan="2" class="text-center py-4">
+                    <div class="spinner-border text-primary spinner-border-sm" role="status"></div>
+                    <span class="ms-2">Loading audit_log...</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
