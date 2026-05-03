@@ -1,0 +1,82 @@
+<script type="module" src="/js/get_wallet.js"></script>
+
+<h3 class="mb-4 text-center">Get wallet - shows given wallet contents</h3>
+
+<div class="container-fluid">
+    <div class="row g-4"> 
+        
+        {{!-- 1st table - GET /wallets/:wallet_id  --}}
+        <div class="mb-3">
+
+            <h4 class="text-center h5 mb-3">GET /wallets/:wallet_id</h4>
+
+            {{!-- Wallet ID input  --}}
+            <div class="form-floating mb-3">
+                <input type="number" class="form-control" id="wallet_id" name="wallet_id" placeholder="wallet_id">
+                <label for="wallet_id">Wallet ID</label>
+            </div>
+
+            {{!-- Submit Button 1 --}}
+            <div class="d-grid mb-3">
+                <button type="button" class="btn btn-primary btn-lg" id="submit_button_1">
+                    <i class="bi bi-wallet2 me-2"></i>send a request
+                </button>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover table-striped border shadow-sm">
+                    <thead class="table-primary">
+                        <tr>
+                            <th scope="col" class="text-center ps-4">stock_name</th>
+                            <th scope="col" class="text-center pe-4">stock_amount</th>
+                        </tr>
+                    </thead>
+                    <tbody id="wallet_table_body">
+                        <tr>
+                            <td colspan="2" class="text-center py-4">
+                                <span>Send a request to load wallet data</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        {{!-- 2nd table - GET /wallets/{wallet_id}/stocks/{stock_name}--}}
+        <div class="mb-5">
+
+            <h4 class="text-center h5 mb-3">GET /wallets/{wallet_id}/stocks/{stock_name}</h4>
+
+            {{!-- Stock name input  --}}
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="stock_name" name="stock_name" placeholder="stock_name">
+                <label for="stock_name">Stock Name</label>
+            </div>
+
+            {{!-- Submit Button 2 --}}
+            <div class="d-grid mb-3">
+                <button type="button" class="btn btn-primary btn-lg" id="submit_button_2">
+                    <i class="bi bi-graph-up-arrow me-2"></i>send a request
+                </button>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover table-striped border shadow-sm">
+                    <thead class="table-success">
+                        <tr>
+                            <th scope="col" class="text-center">stock_amount</th>
+                        </tr>
+                    </thead>
+                    <tbody id="prices_table_body">
+                        <tr>
+                            <td class="text-center py-4">
+                                <span>Send a request to load stock_amount</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>

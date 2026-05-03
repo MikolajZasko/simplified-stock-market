@@ -7,7 +7,7 @@ export const created_wallets = pgTable('created_wallets', {
 
 export const stocks_available = pgTable('stocks_available', {
     stock_id: serial('stock_id').primaryKey(),
-    stock_name: varchar("stock_name", { length: 256 }),
+    stock_name: varchar("stock_name", { length: 256 }).unique(),
     stock_amount: integer('stock_amount').notNull().default(0)
 });
 
@@ -19,6 +19,13 @@ export const wallet_ownership = pgTable('wallet_ownership', {
     stock_amount: integer('stock_amount').notNull().default(0)
 });
 
+export const audit_log = pgTable('audit_log', {
+    log_id: serial('log_id').primaryKey(),
+    transaction_type: varchar('transaction_type', {length: 10}),
+    wallet_id: integer('wallet_id').references(() => created_wallets.wallet_id),
+    stock_name: varchar("stock_name", { length: 256 }).references(() => stocks_available.stock_name),
+})
+
 // types for typescript
 export type Wallet = typeof created_wallets.$inferSelect
 export type NewWallet = typeof created_wallets.$inferInsert
@@ -28,3 +35,6 @@ export type NewStock = typeof stocks_available.$inferInsert
 
 export type WalletOwnership = typeof wallet_ownership.$inferSelect
 export type NewWalletOwnership = typeof wallet_ownership.$inferInsert
+
+export type Log = typeof audit_log.$inferSelect
+export type NewLog = typeof audit_log.$inferInsert

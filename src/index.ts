@@ -83,6 +83,14 @@ app.get("/post_stocks", (req: Request, res: Response) => {
     })
 })
 
+// get_wallet - front-end
+app.get("/get_wallet", (req: Request, res: Response) => {
+    res.render("get_wallet.hbs", {
+        nav_buttons: nav_buttons,
+        title: getPageTitle(req.path)
+    })
+})
+
 // pure backend routes - requirements from file
 // 
 // "simulates sell or buy of a single stock"
@@ -145,7 +153,8 @@ app.post('/wallets/:wallet_id/stocks/:stock_name', async (req: Request, res: Res
         }
         catch (e) {
             return res.status(500).json({
-                message: "An error occured while creating/inserting a new wallet"
+                message: "An error occured while creating/inserting a new wallet",
+                error: e
             })
         }
     }
@@ -181,13 +190,14 @@ app.post('/wallets/:wallet_id/stocks/:stock_name', async (req: Request, res: Res
             }
             catch (e) {
                 return res.status(500).json({
-                    message: "An error occured while creating/inserting a new wallet entry to wallet_ownership"
+                    message: "An error occured while creating/inserting a new wallet entry to wallet_ownership",
+                    error: e
                 })
             }
         }
         else {
-            // extract object
-            const wallet_ownership_selected = wallet_ownership_result[0]
+            // // extract object
+            // const wallet_ownership_selected = wallet_ownership_result[0]
 
             try {
                 // wallet_ownership record exists, try to add +1 to its stock_amount
@@ -201,7 +211,8 @@ app.post('/wallets/:wallet_id/stocks/:stock_name', async (req: Request, res: Res
             }
             catch (e) {
                 return res.status(500).json({
-                    message: "An error occured while adding +1 to stock_amount in wallet_ownership"
+                    message: "An error occured while adding +1 to stock_amount in wallet_ownership",
+                    error: e
                 })
             }
         }
@@ -214,7 +225,8 @@ app.post('/wallets/:wallet_id/stocks/:stock_name', async (req: Request, res: Res
         }
         catch (e) {
             return res.status(500).json({
-                message: "An error occured while substracting -1 from stock_amount in stocks_available"
+                message: "An error occured while substracting -1 from stock_amount in stocks_available",
+                error: e
             })
         }
 
@@ -261,7 +273,8 @@ app.post('/wallets/:wallet_id/stocks/:stock_name', async (req: Request, res: Res
             }
             catch (e) {
                 return res.status(500).json({
-                    message: "An error occured while substracting -1 from stock_amount in wallet_ownership"
+                    message: "An error occured while substracting -1 from stock_amount in wallet_ownership",
+                    error: e
                 })
             }
 
@@ -273,7 +286,8 @@ app.post('/wallets/:wallet_id/stocks/:stock_name', async (req: Request, res: Res
             }
             catch (e) {
                 return res.status(500).json({
-                    message: "An error occured while adding +1 to stock_amount in stocks_available"
+                    message: "An error occured while adding +1 to stock_amount in stocks_available",
+                    error: e
                 })
             }
         }
@@ -290,9 +304,6 @@ app.post('/wallets/:wallet_id/stocks/:stock_name', async (req: Request, res: Res
     // and now tries to add them back to bank - so we SHOULD try to insert a new record to stocks_available
     // BUT we check if stock is present at the beginning... that is why i guess i should skip this case???
     // although if you do as descibed above there can be a wallet with a stock that does not exist in db
-
-    // TO DO:
-    // i can sell infinetly a certain stock???????
 
     return res.status(400).json({
         message: "Unrecognised operation type: " + action
@@ -313,7 +324,7 @@ app.get("/stocks", async (req: Request, res: Response) => {
     }
 
     // send the object
-    res.send(js_object)
+    res.status(200).send(js_object)
 })
 
 // POST /stocks
@@ -346,9 +357,121 @@ app.post("/stocks", async (req: Request, res: Response) => {
 
     } catch (e) {
         // if we reach here, operation was not successful
-        console.error("Insertion failed:", e);
         return res.status(500).json({
             message: "Insertion was NOT successful",
+            error: e
+        })
+    }
+})
+
+// GET /wallets/{wallet_id}
+app.get('/wallets/:wallet_id', async (req: Request, res: Response) => {
+    // take wallet id from url
+    const { wallet_id } = req.params;
+
+    // check if user entered a wallet id (it needs to be a digit)
+    // we actually check server side and client side if these were provided
+    // if we dont check client side we get /wallets/ = bad
+    // if we dont check server side - it feels unsafe
+    if (typeof wallet_id !== 'string' || !/^\d+$/.test(wallet_id)) {
+        return res.status(400).json({
+            message: "Invalid Wallet ID"
+        });
+    }
+
+    try {
+        // try to get all records from wallet - we need to do a simple innerjoin,
+        // as stock_name are stored in a different table
+        const wallet_result = await db
+        .select({
+            ownership_id: wallet_ownership.ownership_id,
+            wallet_id: wallet_ownership.wallet_id,
+            stock_amount: wallet_ownership.stock_amount,
+            stock_name: stocks_available.stock_name, 
+        })
+        .from(wallet_ownership)
+        .innerJoin(
+            stocks_available, 
+            eq(wallet_ownership.stock_id, stocks_available.stock_id)
+        )
+        .where(eq(wallet_ownership.wallet_id, Number(wallet_id)));
+
+        
+        // map the results
+        const front_end_stocks = wallet_result.map(w => {
+            return {
+                name: w.stock_name,
+                quantity: w.stock_amount
+            }
+        })
+
+        console.log({
+            id: wallet_id,
+            stocks: front_end_stocks
+        })
+
+        // return wallet data
+        return res.status(200).json({
+            id: wallet_id,
+            stocks: front_end_stocks
+        })
+    }
+    catch (e) {
+        return res.status(500).json({
+            message: "An error occured while fetching wallet data",
+            error: e
+        })
+    }
+})
+
+// GET /wallets/{wallet_id}/stocks/{stock_name}
+app.get('/wallets/:wallet_id/stocks/:stock_name', async (req: Request, res: Response) => {
+    // take wallet_id and stock_name from url
+    const { wallet_id, stock_name } = req.params;
+
+    // check if user entered a wallet id (it needs to be a digit) and stock_name 
+    // we actually check server side and client side if these were provided
+    // if we dont check client side we get /wallets//stocks/ = bad
+    // if we dont check server side - it feels unsafe
+    if (typeof wallet_id !== 'string' || !/^\d+$/.test(wallet_id) || typeof stock_name !== 'string') {
+        return res.status(400).json({
+            message: "Invalid Wallet ID OR stock_name"
+        });
+    }
+
+    // check if stock_name exists
+    const stock_result = await db.select()
+        .from(stocks_available)
+        .where(eq(stocks_available.stock_name, stock_name))
+        .limit(1); // apparently this is an optimization - stop looking after finding one
+
+    // stock non existent
+    if (stock_result.length === 0 || stock_result[0] === undefined) {
+        return res.status(404).json({
+            message: "The stock does not exist"
+        })
+    }
+
+    // get the stock_name id
+    const stock_name_id = stock_result[0].stock_id
+
+    try {
+        // try to get the provided stock_name record from wallet_ownership (according to my logic there should always be 1)
+        const wallet_result = await db.select()
+            .from(wallet_ownership)
+            .where(and(
+                eq(wallet_ownership.stock_id, stock_name_id),
+                eq(wallet_ownership.wallet_id, Number(wallet_id))
+            ))
+
+            console.log(wallet_result[0]?.stock_amount)
+
+        // send just the number, not sure if "?." is the tight thing to do here
+        return res.status(200).send(wallet_result[0]?.stock_amount)
+    }
+    catch (e) {
+        return res.status(500).json({
+            message: "An error occured while fetching single stock value from wallet data",
             error: e
         })
     }
