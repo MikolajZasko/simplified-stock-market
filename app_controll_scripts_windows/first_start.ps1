@@ -39,7 +39,8 @@ if (Test-Path $instance_count_file_path) {
         Write-Host "The file is empty." -ForegroundColor Yellow
         # override the file with 1 - current instance is first
         Set-Content -Path $instance_count_file_path -Value ([int]1)
-    } else {
+    }
+    else {
         # read content and trim whitespace
         $raw_content = (Get-Content $instance_count_file_path -Raw).Trim()
 
@@ -53,6 +54,9 @@ if (Test-Path $instance_count_file_path) {
                 # we can not run the script, there are alive instances,
                 # either a mistake or first_start.ps1 was run
                 Write-Error "The instance_count file suggests that some instances are alive, if this is the case we DO NOT run another first_start.ps1, if this is a mistake try running the cleanup.ps1"
+                Write-Host  "--------------------------------" -ForegroundColor green
+                Write-Host "Try running the cleanup.ps1 first" -ForegroundColor green
+                Write-Host  "--------------------------------" -ForegroundColor green
                 exit 0
             }
             else {
@@ -60,14 +64,16 @@ if (Test-Path $instance_count_file_path) {
                 Set-Content -Path $instance_count_file_path -Value ([int]1)
             }
 
-        } else {
+        }
+        else {
             Write-Host "File is not empty, but does not contain a valid number." -ForegroundColor Red
             Write-Host "Assume this is the first instance." -ForegroundColor Red
             # override the file with 1 - current instance is first
             Set-Content -Path $instance_count_file_path -Value ([int]1)
         }
     }
-} else {
+}
+else {
     Write-Host "File does not exist." -ForegroundColor Red
 
     # create the file and fill it with 1 - current instance is first
