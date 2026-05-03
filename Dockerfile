@@ -23,6 +23,10 @@ COPY --from=builder /app/package*.json ./
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist
 
+# copy the static and the views dir ???
+COPY --from=builder /app/static ./static
+COPY --from=builder /app/views ./views
+
 # copy database info for drizzle
 # drizzle.config.ts
 COPY --from=builder /app/src/db/drizzle_configs/drizzle.config.ts ./src/db/drizzle_configs/drizzle.config.ts

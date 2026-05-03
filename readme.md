@@ -24,7 +24,7 @@ npx drizzle-kit studio --config=src/db/drizzle_configs/drizzle.config_local.ts
 
 The server will be running at http://localhost:3000 (this requires change) \
 The postgres database will be running at http://localhost:5432 \
-If started, drizzle will be running at https://local.drizzle.studio/ (kinda like a phpmyadmin for sql) \
+If started, drizzle will be running at https://local.drizzle.studio/ (kinda like a phpmyadmin for sql)
 
 ## Tech Stack
 

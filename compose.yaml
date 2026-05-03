@@ -1,3 +1,4 @@
+# this is the first instance that should be run - adds db, migrates it and launches the 1st instance of the app
 services:
   # postgres database
   db:
@@ -18,20 +19,45 @@ services:
       interval: 2s
       timeout: 2s
       retries: 5
+    networks:
+      - stock_network
 
   # Node.js app (Production mode)
   app:
     build:
       context: .
     ports:
-      - "3000:3000"
+      - "${APP_PORT:-3000}:3000"
     environment:
       - DATABASE_URL=postgresql://postgress_admin:postgress_admin@db:5432/simplified_stock_market
       - NODE_ENV=development
+      - PORT=3000 # port inside the container
     depends_on:
       # a health check for app - runs when the db is ready
       db:
         condition: service_healthy
+    networks:
+      - stock_network
+
+  # destroys and initializes the database with reset-db.sh and drizzle.config.ts - should be done only in development
+  db-migrate:
+    build:
+      context: .
+      target: builder
+    command: /app/scripts/reset-db.sh
+    environment:
+      - ENV CI=true
+      - DATABASE_URL=postgresql://postgress_admin:postgress_admin@db:5432/simplified_stock_market
+    # this makes sure that db is ready to go
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - stock_network
 
 volumes:
   pgdata:
+
+networks:
+  stock_network:
+    name: stock_network

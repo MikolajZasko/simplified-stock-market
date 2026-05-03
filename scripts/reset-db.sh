@@ -1,7 +1,7 @@
 #!/bin/sh
 
-# Stop on any error
-set -e
+# # Stop on any error
+# set -e
 
 echo "--- 1. Resetting Database Schema ---"
 psql $DATABASE_URL -f /app/scripts/reset-db.sql

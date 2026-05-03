@@ -13,11 +13,13 @@ import { eq, and, sql, gt, asc } from 'drizzle-orm';
 
 // helper inports
 import { nav_buttons } from "./helper_ts/variables.js"
-import { getPageTitle, db_log_insert } from "./helper_ts/functions.js"
+import { getPageTitle, db_log_insert, getPort} from "./helper_ts/functions.js"
 
 // variables
 const app = express();
-const PORT = 3000;
+
+// make sure the PORT variable is a number
+const PORT = getPort();
 
 // get the __src_path and __static_path
 const __filename: string = fileURLToPath(import.meta.url);
@@ -551,7 +553,7 @@ app.get("/chaos", async (req: Request, res: Response) => {
     })
 
     // make sure we send all imgs and stuff
-    setTimeout(() => {
+    setTimeout(async () => {
         // shutdown node app with "Success" code
         process.exit(0);
     }, 1000);

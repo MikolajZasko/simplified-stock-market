@@ -1,0 +1,18 @@
+# this is the next instance - should be run AFTER the compose.yaml - otherwise unexpected behaviour
+services:
+  # Node.js app (Production mode)
+  app:
+    build:
+      context: .
+    ports:
+      - "${APP_PORT:-3000}:3000"
+    environment:
+      - DATABASE_URL=postgresql://postgress_admin:postgress_admin@db:5432/simplified_stock_market
+      - NODE_ENV=development
+      - PORT=3000 # port inside the container
+    networks:
+      - stock_network
+
+networks:
+  stock_network:
+    external: true
