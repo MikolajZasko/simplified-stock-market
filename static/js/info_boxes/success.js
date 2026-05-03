@@ -1,6 +1,10 @@
 // imported in various view related js scripts
 //
 // show the success_box
+/**
+ * @param {string} message An error message to be displayed
+ * @param {number} [status_code=0] An optional status code
+ */
 export function success(message, status_code = 0) {
     // get needed elements
     const successBox = document.getElementById('success_box');
@@ -48,6 +52,9 @@ export function close_success() {
 }
 
 // a function used to handle success box popping up, based on response
+/**
+ * @param {Response} response A response from REST API (for example fetch() - function)
+ */
 export async function call_success(response) {
     // wait for a json object
     const response_json = await response.json();

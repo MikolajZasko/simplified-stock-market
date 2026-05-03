@@ -1,6 +1,10 @@
 // imported in various view related js scripts
 //
 // show the error_box
+/**
+ * @param {string} message An error message to be displayed
+ * @param {number} [status_code=0] An optional status code
+ */
 export function error(message, status_code = 0) {
     // get needed elements
     const errorBox = document.getElementById('error_box');
@@ -48,6 +52,9 @@ export function close_error() {
 }
 
 // a function used to handle error box popping up, based on response
+/**
+ * @param {Response} response A response from REST API (for example fetch() - function)
+ */
 export async function call_error(response) {
     // wait for a json object
     const response_json = await response.json();
