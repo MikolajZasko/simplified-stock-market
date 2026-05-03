@@ -2,9 +2,11 @@
 
 A simple stock market simulation using Node.js and TypeScript fully containerized using Docker.
 
-## Windows - local machine
+## Overwiew
 
-### Quick Start
+![Overwiew](/assets/Overwiew.png)
+
+## Windows - Quick Start
 
 ```bash
 # firstly, make sure you have docker desktop downloaded and running!
@@ -24,7 +26,9 @@ cd simplified-stock-market
 The server will be running at http://localhost:XXXX \
 The postgres database will be running at http://localhost:5432
 
-### how to monitor the db?
+---
+
+### How to monitor the db?
 
 ```bash
 # if you want to look into the database using a local machine
@@ -34,7 +38,9 @@ npx drizzle-kit studio --config=src/db/drizzle_configs/drizzle.config_local.ts
 
 If started, drizzle will be running at https://local.drizzle.studio/ (kinda like a phpmyadmin for sql)
 
-### how to run another instance?
+---
+
+### How to run another instance?
 
 ```bash
 # use the script only when first_start.ps1 was run and has finished
@@ -42,7 +48,9 @@ If started, drizzle will be running at https://local.drizzle.studio/ (kinda like
 ./app_controll_scripts_windows/instance_start.ps1 3000
 ```
 
-### how to clean docker? / how to restart instance_count?
+---
+
+### How to clean docker? / How to restart instance_count?
 
 ```bash
 # !!! WARNING - THIS SCRIPT CAN DESTROY ALL LOCAL DOCKER CONTAINERS USE WITH CAUTION !!!
@@ -54,9 +62,9 @@ If started, drizzle will be running at https://local.drizzle.studio/ (kinda like
 ./app_controll_scripts_windows/cleanup.ps1 -c
 ```
 
-## Linux / MacOs - local machine
+---
 
-### Quick Start
+## Linux / MacOs - Quick Start
 
 !!! REMEMBER TO ADD EXECUTE PERMISSIONS TO THE SCRIPTS !!!
 
@@ -78,7 +86,9 @@ cd simplified-stock-market
 The server will be running at http://localhost:XXXX \
 The postgres database will be running at http://localhost:5432
 
-### how to monitor the db?
+---
+
+### How to monitor the db?
 
 ```bash
 # if you want to look into the database using a local machine
@@ -88,7 +98,9 @@ npx drizzle-kit studio --config=src/db/drizzle_configs/drizzle.config_local.ts
 
 If started, drizzle will be running at https://local.drizzle.studio/ (kinda like a phpmyadmin for sql)
 
-### how to run another instance?
+---
+
+### How to run another instance?
 
 ```bash
 # use the script only when first_start.sh was run and has finished
@@ -96,7 +108,7 @@ If started, drizzle will be running at https://local.drizzle.studio/ (kinda like
 ./app_controll_scripts_windows/instance_start.sh 3000
 ```
 
-### how to clean docker? / how to restart instance_count?
+### How to clean docker? / How to restart instance_count?
 
 ```bash
 # !!! WARNING - THIS SCRIPT CAN DESTROY ALL LOCAL DOCKER CONTAINERS USE WITH CAUTION !!!
@@ -155,7 +167,7 @@ simplified-stock-market
     └── 📁 layouts/                        # Wrapper templates
 ```
 
-## development
+## Development
 
 ```bash
 # start the app in development mode - docker volumes + nodemon for
@@ -169,3 +181,7 @@ npx drizzle-kit studio --config=src/db/drizzle_configs/drizzle.config_local.ts
 # stop the app in development mode
 docker-compose -f compose.yaml -f compose.dev.yaml down
 ```
+
+## External resources
+
+- [HTTP Cats](https://http.cat/) created by [Rogério Vicente](https://github.com/rogeriopvl) Licensed under the [MIT License](https://github.com/httpcats/http.cat/blob/master/LICENSE)
