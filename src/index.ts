@@ -117,6 +117,9 @@ app.post('/wallets/:wallet_id/stocks/:stock_name', async (req: Request, res: Res
     // take action from body
     const action: string = req.body.type
 
+    console.log("---response: ")
+    console.log(req.body)
+
     // take wallet id from url
     const { wallet_id, stock_name } = req.params;
 
@@ -363,6 +366,9 @@ app.get("/stocks", async (req: Request, res: Response) => {
         stocks: stocks
     }
 
+    console.log("---response")
+    console.log(js_object)
+
     // send the object
     res.status(200).send(js_object)
 })
@@ -371,6 +377,9 @@ app.get("/stocks", async (req: Request, res: Response) => {
 app.post("/stocks", async (req: Request, res: Response) => {
     // get all stocks entered
     const stocks = req.body.stocks
+
+    console.log("---response")
+    console.log(req.body)
 
     // check if req.body.stocks is present
     if (!stocks || !Array.isArray(stocks) || stocks.length === 0) {
@@ -454,6 +463,7 @@ app.get('/wallets/:wallet_id', async (req: Request, res: Response) => {
             }
         })
 
+        console.log("---response: ")
         console.log({
             id: wallet_id,
             stocks: front_end_stocks
@@ -513,7 +523,8 @@ app.get('/wallets/:wallet_id/stocks/:stock_name', async (req: Request, res: Resp
                 eq(wallet_ownership.wallet_id, Number(wallet_id))
             ))
 
-            console.log(wallet_result[0]?.stock_amount)
+        console.log("---response: ")
+        console.log(wallet_result[0]?.stock_amount)
 
         // send just the number, not sure if "?." is the tight thing to do here
         return res.status(200).send(wallet_result[0]?.stock_amount)
@@ -538,7 +549,8 @@ app.get('/log', async (req: Request, res: Response) => {
             .from(audit_log)
             .orderBy(asc(audit_log.log_id))
 
-        console.log(audit_log_result)
+        console.log("---response: ")
+        console.log({log: audit_log_result})
 
         // send response
         return res.status(200).json({
