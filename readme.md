@@ -54,9 +54,11 @@ If started, drizzle will be running at https://local.drizzle.studio/ (kinda like
 ./app_controll_scripts_windows/cleanup.ps1 -c
 ```
 
-## Linux - local machine
+## Linux / MacOs - local machine
 
 ### Quick Start
+
+!!! REMEMBER TO ADD EXECUTE PERMISSIONS TO THE SCRIPTS !!!
 
 ```bash
 # firstly, make sure you have docker desktop downloaded and running!

@@ -109,6 +109,8 @@ async function injectStocksTable1(res_json) {
     // check if any stocks were found
     if (stocks.length === 0) {
         tableBody.innerHTML = `<tr><td colspan="2" class="text-center text-muted">No stocks found.</td></tr>`;
+        
+        error("No stocks found for wallet with id: " + wallet_id, 400)
         return 0
     }
 
@@ -149,6 +151,7 @@ async function injectStocksTable2(res_text, wallet_id, stock_name) {
             <span class="text-center text-muted">Wallet with id '${wallet_id}' does not own any '${stock_name}'</span>
         </td>
     `;
+    error("Wallet with id: " + wallet_id + " does not own any " + stock_name, 400)
     }
     else {
         // we send a single digit, so this is what we insert
