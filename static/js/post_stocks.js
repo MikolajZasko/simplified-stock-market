@@ -46,12 +46,12 @@ async function post_call() {
 
     // Create an array of all stock data entered
     const stocks = Array.from(entries).map(row => ({
-        stock_name: row.querySelector('.stock-name').value,
-        stock_amount: row.querySelector('.stock-quantity').value
+        name: row.querySelector('.stock-name').value,
+        quantity: row.querySelector('.stock-quantity').value
     }));
 
     // check if all fields are filled
-    if (stocks.some(s => !s.stock_name || !s.stock_amount)) {
+    if (stocks.some(s => !s.name || !s.quantity)) {
         error("Please fill in all fields.");
         return;
     }

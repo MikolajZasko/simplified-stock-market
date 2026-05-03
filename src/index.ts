@@ -390,7 +390,7 @@ app.post("/stocks", async (req: Request, res: Response) => {
     }
 
     // check if stocks entered have the same names
-    const hasDuplicates = new Set(stocks.map(s => s.stock_name)).size !== stocks.length;
+    const hasDuplicates = new Set(stocks.map(s => s.name)).size !== stocks.length;
 
     if (hasDuplicates) {
         return res.status(400).json({
@@ -399,13 +399,22 @@ app.post("/stocks", async (req: Request, res: Response) => {
     }
 
     try {
+
+        // map values front end to back end
+        const stocks_back_end = stocks.map((item) => ({
+            stock_name: item.name,
+            stock_amount: item.quantity
+        }))
+        
+        console.log(stocks_back_end)
+
         // try to insert stocks to database        
         await db.transaction(async (tx) => {
             // Clear the table
             await tx.delete(stocks_available);
 
             // insert new values to table
-            await tx.insert(stocks_available).values(stocks);
+            await tx.insert(stocks_available).values(stocks_back_end);
         });
 
         // if we reach here, operation was successful
