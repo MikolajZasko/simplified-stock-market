@@ -99,6 +99,14 @@ app.get("/audit_log", (req: Request, res: Response) => {
     })
 })
 
+// chaos_front - front-end
+app.get("/chaos_front", (req: Request, res: Response) => {
+    res.render("chaos_front.hbs", {
+        nav_buttons: nav_buttons,
+        title: getPageTitle(req.path)
+    })
+})
+// 
 // pure backend routes - requirements from file
 // 
 // "simulates sell or buy of a single stock"
@@ -532,8 +540,21 @@ app.get('/log', async (req: Request, res: Response) => {
             error: e
         })
     }
+})
 
+// POST /chaos
+app.get("/chaos", async (req: Request, res: Response) => {
     
+    // send last response to client
+    res.status(202).json({
+        message: "Ok... killing instance on port: " + PORT
+    })
+
+    // make sure we send all imgs and stuff
+    setTimeout(() => {
+        // shutdown node app with "Success" code
+        process.exit(0);
+    }, 1000);
 })
 
 // start app

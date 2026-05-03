@@ -25,4 +25,8 @@ export const nav_buttons = [
         title: "Audit log",
         link: "/audit_log"
     },
+    {
+        title: "POST /chaos",
+        link: "/chaos_front"
+    },
 ]
