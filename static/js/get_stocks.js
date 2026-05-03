@@ -49,8 +49,8 @@ async function injectStocks(stocks) {
     stocks.forEach(stock => {
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td class="ps-4 fw-bold text-center">${stock.name}</td>
-            <td class="text-center pe-4">
+            <td class=" fw-bold text-center">${stock.name}</td>
+            <td class="text-center ">
                 <span class="badge bg-secondary px-3">${stock.quantity}</span>
             </td>
         `;
