@@ -7,6 +7,7 @@ export function error(message, status_code = 0) {
     const errorOverlay = document.getElementById('error_overlay');
     const messageElement = document.getElementById('error_message');
     const errorImg = document.getElementById('error_img');
+    const error_close_button = document.getElementById('error_close_button')
 
     // insert message
     messageElement.textContent = message;
@@ -30,6 +31,9 @@ export function error(message, status_code = 0) {
     // remove a class so elements appear
     errorBox.classList.remove('d-none');
     errorOverlay.classList.remove('d-none');
+
+    // make the close button selected so we can immediately press "enter" and close the box
+    error_close_button.focus()
 }
 
 // close the error box

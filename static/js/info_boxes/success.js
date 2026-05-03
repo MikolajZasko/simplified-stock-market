@@ -7,6 +7,7 @@ export function success(message, status_code = 0) {
     const successOverlay = document.getElementById('success_overlay');
     const messageElement = document.getElementById('success_message');
     const successImg = document.getElementById('success_img');
+    const success_close_button = document.getElementById('success_close_button');
 
     // insert message
     messageElement.textContent = message;
@@ -30,6 +31,9 @@ export function success(message, status_code = 0) {
     // remove a class so elements appear
     successBox.classList.remove('d-none');
     successOverlay.classList.remove('d-none');
+
+    // make the close button selected so we can immediately press "enter" and close the box
+    success_close_button.focus()
 }
 
 // close the success box
