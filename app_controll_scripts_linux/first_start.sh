@@ -15,8 +15,8 @@ if [ "$APP_PORT" -lt 1024 ] || [ "$APP_PORT" -gt 65535 ]; then
     exit 1
 fi
 
-# Port check (using ss or netstat)
-if ss -tuln | grep -q ":$APP_PORT "; then
+# Port check (using lsof for macOS/Linux compatibility)
+if lsof -Pi :$APP_PORT -sTCP:LISTEN -t >/dev/null ; then
     echo -e "${RED}Error: Port $APP_PORT is already in use!${NC}"
     exit 1
 fi
