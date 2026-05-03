@@ -2,28 +2,28 @@ import { pgTable, serial, integer, varchar } from 'drizzle-orm/pg-core';
 
 // tables that are created
 export const created_wallets = pgTable('created_wallets', {
-    wallet_id: serial('wallet_id').primaryKey()
+    wallet_id: serial('wallet_id').primaryKey().notNull()
 });
 
 export const stocks_available = pgTable('stocks_available', {
-    stock_id: serial('stock_id').primaryKey(),
-    stock_name: varchar("stock_name", { length: 256 }).unique(),
+    stock_id: serial('stock_id').primaryKey().notNull(),
+    stock_name: varchar("stock_name", { length: 256 }).unique().notNull(),
     stock_amount: integer('stock_amount').notNull().default(0)
 });
 
 export const wallet_ownership = pgTable('wallet_ownership', {
-    ownership_id: serial('ownership_id').primaryKey(),
-    wallet_id: integer('wallet_id').references(() => created_wallets.wallet_id),
+    ownership_id: serial('ownership_id').primaryKey().notNull(),
+    wallet_id: integer('wallet_id').references(() => created_wallets.wallet_id).notNull(),
     // because of { onDelete: 'cascade' } - if we wipe wallet_ownership table all dependancies are wiped too
-    stock_id: integer('stock_id').references(() => stocks_available.stock_id, { onDelete: 'cascade' }),
+    stock_id: integer('stock_id').references(() => stocks_available.stock_id, { onDelete: 'cascade' }).notNull(),
     stock_amount: integer('stock_amount').notNull().default(0)
 });
 
 export const audit_log = pgTable('audit_log', {
-    log_id: serial('log_id').primaryKey(),
-    transaction_type: varchar('transaction_type', {length: 10}),
-    wallet_id: integer('wallet_id').references(() => created_wallets.wallet_id),
-    stock_name: varchar("stock_name", { length: 256 }).references(() => stocks_available.stock_name),
+    log_id: serial('log_id').primaryKey().notNull(),
+    transaction_type: varchar('transaction_type', {length: 10}).notNull(),
+    wallet_id: integer('wallet_id').references(() => created_wallets.wallet_id).notNull(),
+    stock_name: varchar("stock_name", { length: 256 }).references(() => stocks_available.stock_name).notNull(),
 })
 
 // types for typescript
