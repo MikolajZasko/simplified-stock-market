@@ -6,7 +6,7 @@ A simple stock market simulation using Node.js and TypeScript fully containerize
 
 ### Quick Start
 
-```powershell
+```ps1
 # firstly, make sure you have docker desktop downloaded and running!
 # https://www.docker.com/products/docker-desktop/
 #
@@ -26,7 +26,7 @@ The postgres database will be running at http://localhost:5432 \
 
 ### how to monitor the db?
 
-```powershell
+```ps1
 # if you want to look into the database using a local machine
 # use the drizzle.config_local.ts like so:
 npx drizzle-kit studio --config=src/db/drizzle_configs/drizzle.config_local.ts
@@ -36,7 +36,7 @@ If started, drizzle will be running at https://local.drizzle.studio/ (kinda like
 
 ### how to run another instance?
 
-```powershell
+```ps1
 # use the script only when first_start.ps1 was run and has finished
 # change the port number if needed
 ./app_controll_scripts_windows/instance_start.ps1 3000
@@ -44,7 +44,7 @@ If started, drizzle will be running at https://local.drizzle.studio/ (kinda like
 
 ### how to clean docker?
 
-```powershell
+```ps1
 # !!! WARNING - THIS SCRIPT CAN DESTROY ALL LOCAL DOCKER CONTAINERS USE WITH CAUTION !!!
 #
 # leave docker containers alone - clean just the instance_count file
