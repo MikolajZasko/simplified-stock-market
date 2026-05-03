@@ -34,7 +34,7 @@ fetch_stocks()
 // returns 0 if NOT ok
 async function injectStocks(stocks) {
     // find table body
-    const tableBody = document.getElementById('stocks-table-body')
+    const tableBody = document.getElementById('stocks_table_body')
 
     // Clear the loading spinner from HTML
     tableBody.innerHTML = ''
