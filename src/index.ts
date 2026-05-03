@@ -380,6 +380,15 @@ app.post("/stocks", async (req: Request, res: Response) => {
         });
     }
 
+    // check if stocks entered have the same names
+    const hasDuplicates = new Set(stocks.map(s => s.stock_name)).size !== stocks.length;
+
+    if (hasDuplicates) {
+        return res.status(400).json({
+            message: "You can not insert stocks with the same stock_name >:(",
+        })
+    }
+
     try {
         // try to insert stocks to database        
         await db.transaction(async (tx) => {
